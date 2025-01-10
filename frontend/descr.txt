@@ -1,0 +1,16 @@
+Weitere Features
+- Möglichkeit tägliche und wöchentliche Lernhabits für einzelne Fächer oder generell zu setzen
+-> man hat dann über eine Übersicht über die täglichen / wöchentlichen ToDos und kann diese abhaken wenn erledigt
+- Gamifizierung: Wenn ToDo's erledigt werden erhöht sich ein "Lern-Score", genau so wenn man ein habit für den Tag geschafft hat, eine Klausur, einen Test oder eine Präsentation geschafft hat
+- allgemeine ToDo-Liste und nicht nur für Fächer
+- Klausuren eingeben: Klausuren mit Datum eingeben, dann hat man links einen "Tage-Runterzähler" bis zu den jeweiligen Klausuren
+- Tests eingeben
+-> Klausuren, Tests und Präsentationen als Prüfungsleistung zusammenfassen, der User kann dann auswählen was von denen es genau ist
+- Klausurvorbereitung als Feature: Möglichkeit eine Klausurvorbereitung zu starten, wobei man sich die Inhalte notieren kann, die gelernt werden sollen und weiteres
+- Kalenderübersicht die alle wichtigen Termine anzeigt
+- Allgemeine Termine hinzufügen
+- Wenn man Fächer bzw. Module anlegt kann man festlegen, wie viele ETCS die einem bringen
+-> es gibt dann eine Gesamtübersicht darüber, wie viele ETCS man im Studium bereits bisher gesammelt hat
+-> diese Gesamtübersicht gibt weitere Auswertungen an, beispielsweise wie viele ToDos man diese Woche, dieses Monat, dieses Jahr oder insgesamt pro Fach erledigt hat
+- man kann bei den Auswertungen auch manuell Fächer mit den ECTS Punkten hinzufügen (Fächer die man in der Vergangenheit schon vor Nutzung der App belegt hat)
+- statt Fächer zu löschen, kann man sie auch abschließen, man hat sie also bestanden aber die Daten bleiben in den Auswertungen enthalten

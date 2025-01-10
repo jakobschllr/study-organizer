@@ -1,0 +1,16 @@
+.
+├── package-lock.json
+├── package.json
+└── src
+    ├── app.js (express app and middlewares)
+    ├── index.js (Port Zuordnung)
+    ├── models (communication with database)
+    ├── components
+    │   └── user
+    │       ├── user.controller.js
+    │       ├── user.entities.js
+    │       ├── user.module.js
+    │       ├── user.router.js
+    │       └── user.service.js
+    └── loaders
+        └── routes.js
