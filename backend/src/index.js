@@ -129,7 +129,7 @@ app.put('/api/data/links', (request, response) => {
   }
   
   if (success) {
-    response.status(204).end()
+    response.status(204).end() // success
   } else {
     response.status(500).end() // internal server error
   }
