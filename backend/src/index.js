@@ -1,74 +1,32 @@
 import app from './app.js'
 import Subject from './models/subjects.js'
 import Link from './models/links.js'
+import Habit from './models/habits.js'
+import User from './users/user.js'
 
-let data = {
-    subjects: [
-      {
-        "title": "Grundlagen des Programmierens",
-        "todos": ["Artemis Aufgaben erledigen", "Karteikarten anlegen"],
-        "exams": ["Klausur am 07. Januar"],
-        "id": "0"
-      },
-      {
-        "title": "Technische Grundlagen der Informatik",
-        "todos": ["Praktikum und Übung bis Freitag erledigen"],
-        "exams": ["Klausur am 09. Januar"],
-        "id": "1"
-      },
-      {
-        "title": "Diskrete Strukturen",
-        "todos": ["Lehrtext lesen, Jupyter Notebook bearbeiten, Kontrollfragen beantworten"],
-        "exams": ["Klausur am 09. Januar"],
-        "id": "2"
-      },
-  ],
-  links: [
-    {
-      "name": "Stundenplan",
-      "url": "https://stundenplan.ostfalia.de/i/Semester/Semester-grafisch/I-B.Sc.%201.%20Sem%20Informatik.html",
-      "id": "0"
-    },
-    {
-      "name": "Moodle",
-      "url": "https://moodle.ostfalia.de/my/",
-      "id": "1"
-    },
-    {
-      "name": "Jupyter Notebook",
-      "url": "https://jupyter-cloud.gwdg.de/jhub/hub/user/0902197/lab?",
-      "id": "3"
-    },
-    {
-      "name": "Artemis",
-      "url" : "https://artemis.ise-i.ostfalia.de/",
-      "id": "4"
-    },
-    {
-      "name": "Outlook",
-      "url": "https://owa.sonia.de/owa/#path=/mail",
-      "id": "5"
-    }
-  ]
-  }
 
 app.get('/api/data', (request, response) => {
-  Subject.find({}).then(subjects => {
-    Link.find({}).then(links => {
-      console.log({subjects: subjects, links: links})
-      response.json({subjects: subjects, links: links})
+  const userId = request.body.userId
+  Subject.find({ userId: userId }).then(subjects => {
+    Link.find({ userId: userId }).then(links => {
+      Habit.find({ userId: userId }).then(habits => {
+        response.json({subjects: subjects, links: links, habits: habits})
+      })
     })
   })
 })
 
 // add subject
 app.post('/api/data/subjects', (request, response) => {
-  const newSubject = request.body
+  const newSubject = request.body.subject
+  const userId = request.body.userId
 
   const subject = new Subject({
     title: newSubject.title,
+    credits: newSubject.credits,
     todos: newSubject.todos,
-    exams: newSubject.exams
+    exams: newSubject.exams,
+    userId: userId
   })
 
   subject.save()
@@ -87,8 +45,9 @@ app.delete('/api/data/subjects/:id', (request, response) => {
 
 // change subject
 app.put('/api/data/subjects/:id', (request, response) => {
-  const updatedData = request.body
-  const { title, todos, exams} = request.body
+  const title = request.body.title
+  const todos = request.body.todos
+  const exams = request.body.exams
 
   Subject.findByIdAndUpdate(request.params.id, {title, todos, exams}, { new: true, runValidators: true, context: 'query'})
     .then(updatedSubject => {
@@ -98,11 +57,13 @@ app.put('/api/data/subjects/:id', (request, response) => {
 
 // add link
 app.post('/api/data/links', (request, response) => {
-  const newLink = request.body
+  const newLink = request.body.link
+  const userId = request.body.userId
 
   const link = new Link({
     name: newLink.name,
-    url: newLink.url
+    url: newLink.url,
+    userId: userId
   })
 
   link.save()
@@ -134,6 +95,76 @@ app.put('/api/data/links', (request, response) => {
     response.status(500).end() // internal server error
   }
 
+})
+
+// add habit
+app.post('/api/data/habits', (request, response) => {
+  const newHabit = request.body.habit
+  const userId = request.body.userId
+  const habit = new Habit({
+    name: newHabit.name,
+    nextDate: newHabit.nextDate,
+    userId: userId
+  })
+  habit.save()
+    .then(savedHabit => {
+      response.json(savedHabit)
+    })
+})
+
+// delete habit
+app.delete('/api/data/habits/:id', (request, response) => {
+  Habit.findByIdAndDelete(request.params.id)
+    .then(result => {
+      response.status(204).end()
+    })
+})
+
+// check habit as done
+app.put('/api/data/habits/:id', (request, response) => {
+  console.log("Is executed")
+  const { name, nextDate } = request.body
+  Habit.findByIdAndUpdate(request.params.id, {name, nextDate}, {new: true, runValidators: true, context: 'query'})
+    .then(updatedHabit => {
+      response.json(updatedHabit)
+    })
+})
+
+// login user
+app.post('/api/data/users/login', (request, response) => {
+  const userObj = request.body
+  let foundUser = false
+  User.find({}).then(users => {
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].username === userObj.username && users[i].password === userObj.password) {
+        foundUser = true
+        response.json(users[i])
+      }
+    }
+    if (!foundUser) {
+      response.json({status: null})
+    }
+  })
+})
+
+app.post('/api/data/users/signup', (request, response) => {
+  const userObj = request.body
+  const user = new User({
+    username: userObj.username,
+    major: userObj.major,
+    password: userObj.password,
+    score: userObj.score,
+    email: userObj.email,
+    createdAt: userObj.createdAt
+  })
+
+  user.save()
+    .then(savedUser => {
+      response.json(savedUser)
+    })
+    .catch(error => {
+      response.json({status: null})
+    })
 })
 
 const PORT = 3001

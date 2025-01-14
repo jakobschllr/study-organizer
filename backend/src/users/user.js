@@ -15,30 +15,34 @@ mongoose.connect(url)
         console.log('Error connecting to MongoDB: ', error.message)
     })
 
-const subjectSchema = new mongoose.Schema({
-    title: {
+const userSchema = new mongoose.Schema({
+    username: {
         type: String,
         required: true
     },
-    credits: {
+    major: {
         type: String,
         required: true
     },
-    todos: {
-        type: Array,
+    score: {
+        type: Number,
         required: true
     },
-    exams: {
-        type: Array,
+    email: {
+        type: String,
+        requried: true
+    },
+    password: {
+        type: String,
         required: true
     },
-    userId: {
+    createdAt: {
         type: String,
         required: true
     }
 })
 
-subjectSchema.set("toJSON", {
+userSchema.set("toJSON", {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString()
         delete returnedObject._id
@@ -46,4 +50,4 @@ subjectSchema.set("toJSON", {
     }
 })
 
-export default mongoose.model("Subject", subjectSchema)
+export default mongoose.model("User", userSchema)

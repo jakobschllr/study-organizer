@@ -1,14 +1,17 @@
-const NewSubjectPopup = ({setSubjectInput, currentSubjectInput, createNewSubject, cancelEditing}) => {
+const NewSubjectPopup = ({setSubjectInput, currentSubjectInput, setCreditInput, currentCreditInput, createNewSubject, cancelEditing}) => {
     return (
         <div>
             <div className="popup-container">
                 <div className="popup-body">
-                    <h2>Create new Subject</h2>
+                    <p className="popup-heading">Create new Subject</p>
                     <form onSubmit={createNewSubject}>
-                        Subject Name: <input value={currentSubjectInput} onChange={setSubjectInput}/>
+                        Subject Name: <input className="text-input-short" value={currentSubjectInput} onChange={setSubjectInput}/>
+                        <br />
+                        ECTS / Credits: <input className="text-input-short" value={currentCreditInput} onChange={setCreditInput}/>
+                        <br />
+                        <button className="regular-button" onClick={() => cancelEditing()}>Cancel</button>
                         <button className="add-attribute-button" type="submit">Add Subject</button>
                     </form>
-                    <button className="regular-button" onClick={() => cancelEditing()}>Cancel</button>
                 </div>
             </div>
         </div>

@@ -1,27 +1,34 @@
 const Links = ({links, addNewLink, deletingLinks, handleLinkDeletion}) => {
-    console.log(links)
     if (deletingLinks) {
         let ids = []
         return (
             <div className="links">
-                {links.map(l => 
-                    <div className="link-wrapper">
-                        <a className="link" title={l.name} onClick={(e) => ids = checkLink(ids, l.id, e)} ><img alt={l.name} src={'http://www.google.com/s2/favicons?domain=' + l.url} /></a>
-                    </div>
-                )}
-                <button className="regular-button" onClick={() => handleLinkDeletion(ids)}>Done</button>
+                <div className="links-button">
+                    <button className="edit-links-button" onClick={() => handleLinkDeletion(ids)}>Done</button>
+                </div>
+                <div className="link-buttons">
+                    {links.map(l => 
+                        <div className="link-wrapper">
+                            <a className="link" title={l.name} onClick={(e) => ids = checkLink(ids, l.id, e)} >{l.name}</a>
+                        </div>
+                    )}
+                </div>
             </div>
         )
     } else {
         return (
             <div className="links">
-                {links.map(l => 
-                    <div key={l.name} className="link-wrapper">
-                        <a className="link" href={l.url} title={l.name}><img alt={l.name} src={'http://www.google.com/s2/favicons?domain=' + l.url} /></a>
-                    </div>
-                )}
-                <button className="regular-button" onClick={() => addNewLink()}>New Link</button>
-                <button className="regular-button" onClick={() => handleLinkDeletion([])}>Delete Links</button>
+                <div className="edit-link-buttons">
+                    <button className="edit-links-button" onClick={() => addNewLink()}>New Link</button>
+                    <button className="edit-links-button" onClick={() => handleLinkDeletion([])}>Delete Links</button>
+                </div>
+                <div className="link-buttons">
+                    {links.map(l => 
+                        <div key={l.name} className="link-wrapper">
+                            <a className="link" href={l.url} title={l.name}>{l.name}</a>
+                        </div>
+                    )}
+                </div>
             </div>
         )
     }

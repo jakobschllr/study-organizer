@@ -23,6 +23,10 @@ const linkSchema = new mongoose.Schema({
     url: {
         type: String,
         required: true
+    },
+    userId: {
+        type: String,
+        required: true
     }
 })
 
@@ -34,5 +38,4 @@ linkSchema.set("toJSON", {
     }
 })
 
-//module.exports = mongoose.model("Link", linkSchema)
 export default mongoose.model("Link", linkSchema)

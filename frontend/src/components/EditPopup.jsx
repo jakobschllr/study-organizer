@@ -6,9 +6,8 @@ const EditPopup = ({subject, deleteExam, addExam, deleteTodo, addTodo, id, saveC
     return (
         <div className="popup-container">
             <div className="popup-body">
-                <h2>{subject.title}</h2>
-
-                <h3>Exams</h3>
+                <p className="popup-heading">{subject.title}</p>
+                <p className="popup-subheading">Exams:</p>
                 {subject.exams.map(e =>
                     <div className="popup-exams">
                         <p className="attribute-content">{e}</p>
@@ -20,7 +19,7 @@ const EditPopup = ({subject, deleteExam, addExam, deleteTodo, addTodo, id, saveC
                     <button className="add-attribute-button" type="submit">Add Exam</button>
                 </form>
 
-                <h3>ToDo's</h3>
+                <p className="popup-subheading">ToDo's</p>
                 {subject.todos.map(t =>
                     <div className="popup-todos">
                         <p className="attribute-content">{t}</p>
@@ -33,12 +32,9 @@ const EditPopup = ({subject, deleteExam, addExam, deleteTodo, addTodo, id, saveC
                 </form>
 
                 <br />
-                <br />
 
                 <button className="regular-button" onClick={() => saveChanges(subject, id)}>Save Changes</button>
                 <button className="regular-button" onClick={() => cancelEditing()}>Cancel</button>
-                <br />
-                <br />
                 <button className="regular-button"onClick={() => deleteSubject(id)}>Delete Subject</button>
             </div>
         </div>
